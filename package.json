@@ -1,0 +1,18 @@
+{
+  "name": "no-build-starter",
+  "version": "0.0.1",
+  "description": "Simple boilerplate, without any build pipeline, for practice and teaching purpose.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx serve ./src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "umd"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^6.4.3"
+  }
+}
