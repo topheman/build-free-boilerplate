@@ -1,0 +1,16 @@
+<div id="root"></div>
+<script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+<script type="text/javascript">
+/**
+ * Inspired by https://egghead.io/lessons/react-write-hello-world-with-raw-react-apis
+ * by @kentcdodds
+ */
+const rootElement = document.getElementById('root');
+const element = React.createElement(
+  'p',
+  {className: 'container'},
+  'Hello World'
+);
+ReactDOM.render(element, rootElement);
+</script>
