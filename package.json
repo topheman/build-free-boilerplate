@@ -4,7 +4,8 @@
   "description": "Simple boilerplate, without any build pipeline, for practice and teaching purpose.",
   "main": "index.js",
   "scripts": {
-    "start": "npx serve ./src",
+    "start": "npx serve .",
+    "make-index": "node ./bin/makeIndex.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <!-- This file was generated with ./bin/makeIndex.js -->
+  <meta charset="UTF-8">
+  <title>Topheman - topheman/build-free-boilerplate</title>
+  <link href="https://unpkg.com/normalize.css@7.0.0/normalize.css" rel="stylesheet">
+  <link href="./src/style/main.css" rel="stylesheet">
+  <link href="./src/style/header.css" rel="stylesheet">
+  <link href="./src/style/footer.css" rel="stylesheet">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+</head>
+<body>
+  <ul class="site-networks">
+    <li class="twitter"><a href="https://twitter.com/topheman" title="@topheman on twitter"><span class="icon"></span><span class="desc">Twitter</span></a></li>
+    <li class="github"><a href="https://github.com/topheman/build-free-boilerplate" title="Fork on github"><span class="icon"></span><span class="desc">Github</span></a></li>
+  </ul>
+  <h1>topheman/build-free-boilerplate</h1>
+  <p>In a time where even for a "Hello World" project, you need to setup a whole build/transpile pipeline with webpack (or other tools), the goal of this project is to:</p>
+  <ul>
+    <li>have a simple starter kit</li>
+    <li>without any build tool to configure</li>
+    <li>directly using UMD build</li>
+    <li>with a few simple examples (for ES6, React ...)</li>
+  </ul>
+  <p>You can directly access the following examples online:</p>
+  <ul><li class="folder"><a href="./src/assets">assets</a><ul><li class="folder"><a href="./src/assets/images">images</a><ul><li class="file"><a href="./src/assets/images/github-retina.png">github-retina.png</a></li><li class="file"><a href="./src/assets/images/twitter-retina.png">twitter-retina.png</a></li></ul></li></ul></li><li class="folder"><a href="./src/style">style</a><ul><li class="file"><a href="./src/style/footer.css">footer.css</a></li><li class="file"><a href="./src/style/header.css">header.css</a></li><li class="file"><a href="./src/style/main.css">main.css</a></li></ul></li><li class="file"><a href="./src/react-basic.html">react-basic.html</a></li><li class="file"><a href="./src/react-jsx.html">react-jsx.html</a></li><li class="file"><a href="./src/reasonml.html">reasonml.html</a></li><li class="file"><a href="./src/test.html">test.html</a></li></ul>
+  <footer class="footer">
+    <p>
+      ©2018 <a href="http://labs.topheman.com/">labs.topheman.com</a> - Christophe Rosset<br />
+      <iframe
+        width="78px"
+        height="28px"
+        title="Twitter Tweet Button"
+        style="border: 0; overflow: hidden; margin-top: 5px;"
+        scrolling="no"
+        src="https://platform.twitter.com/widgets/tweet_button.html?count=none&dnt=false&lang=en&original_referer=http%3A%2F%2Ftopheman.github.io%2Fbuild-free-boilerplate&size=l&text=Try&type=share&url=https%3A%2F%2Ftopheman.github.io%2Fbuild-free-boilerplate%2F&via=topheman">
+      </iframe>
+    </p>
+  </footer>
+<script type="text/javascript">
+  // github pages return 404 for folders - remove link to folders
+  if (window.location.hostname === 'topheman.github.io') {
+    // Loaded ready states
+    function done() {
+      document.querySelectorAll('li.folder > a').forEach(el => {
+        el.style.pointerEvents = 'none';
+        el.style.textDecoration = 'none';
+      })
+    };
+    const loadedStates = ['interactive', 'complete'];
+    if (loadedStates.includes(document.readyState)) {
+      done();
+    } else {
+      document.addEventListener('DOMContentLoaded', done);
+    }
+  }
+</script>
+</body>
+</html>
