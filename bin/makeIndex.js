@@ -2,6 +2,7 @@
 
 const TARGET_FOLDER = 'src';
 const EXCLUDE_FILES = ['index.html'];
+const LOW_PRIORITY_FOLDERS = ['assets', 'style'];
 
 const path = require('path');
 const fs = require('fs');
@@ -30,7 +31,7 @@ function makeIndex(fromFolder) {
     const stat = fs.statSync(filePath);
     if (stat.isDirectory()) {
       const innerString = makeIndex(filePath);
-      string += `<li class="folder"><a href="${urlFromPath(filePath)}">${file}</a><ul>${innerString}</ul></li>`;
+      string += `<li class="folder${LOW_PRIORITY_FOLDERS.includes(file) ? ' exclude' : ''}"><a href="${urlFromPath(filePath)}">${file}</a><ul>${innerString}</ul></li>`;
     }
     else if (!EXCLUDE_FILES.includes(file)) {
       string += `<li class="file"><a href="${urlFromPath(filePath)}">${file}</a></li>`;
@@ -52,6 +53,11 @@ const template = `<!DOCTYPE html>
   <link href="./src/style/header.css" rel="stylesheet">
   <link href="./src/style/footer.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <style>
+    .folder.exclude a {
+      color: #deb3b3;
+    }
+  </style>
 </head>
 <body>
   <ul class="site-networks">
