@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npx serve .",
     "make-index": "node ./bin/makeIndex.js",
+    "build": "npm run make-index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
