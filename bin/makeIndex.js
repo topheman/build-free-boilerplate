@@ -2,7 +2,11 @@
 
 const TARGET_FOLDER = 'src';
 const EXCLUDE_FILES = ['index.html'];
-const LOW_PRIORITY_FOLDERS = ['assets', 'style'];
+// relative to project root
+const LOW_PRIORITY_FILES_AND_FOLDERS = [
+  './src/assets',
+  './src/style'
+];
 const DESCRIPTION_CONFIG = {
   "./src/react-basic.html": "Simple React example using <code>React.createElement</code> (no JSX).",
   "./src/react-jsx.html": `Simple React example with JSX (using <a href="https://unpkg.com/babel-standalone" target="_blank">babel-standalone</a>).`,
@@ -37,7 +41,7 @@ function makeIndex(fromFolder) {
     if (stat.isDirectory()) {
       const innerString = makeIndex(filePath);
       string += `
-        <li class="folder${LOW_PRIORITY_FOLDERS.includes(file) ? ' exclude' : ''}">
+        <li class="folder${LOW_PRIORITY_FILES_AND_FOLDERS.includes(urlFromPath(filePath)) ? ' exclude' : ''}">
           <a href="${urlFromPath(filePath)}">${file}</a>
           ${DESCRIPTION_CONFIG[urlFromPath(filePath)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(filePath)]}</span>` : ''}
           <ul>
@@ -47,7 +51,7 @@ function makeIndex(fromFolder) {
     }
     else if (!EXCLUDE_FILES.includes(file)) {
       string += `
-        <li class="file">
+        <li class="file${LOW_PRIORITY_FILES_AND_FOLDERS.includes(urlFromPath(filePath)) ? ' exclude' : ''}">
           <a href="${urlFromPath(filePath)}">${file}</a>
           ${DESCRIPTION_CONFIG[urlFromPath(filePath)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(filePath)]}</span>` : ''}
         </li>`;
@@ -72,7 +76,10 @@ const template = `<!DOCTYPE html>
   <link href="./src/style/footer.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <style>
-    .folder.exclude a {
+    .exclude {
+      color: #b3b3b3;
+    }
+    .exclude a {
       color: #deb3b3;
     }
     .description {
