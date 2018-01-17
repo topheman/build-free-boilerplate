@@ -1,5 +1,5 @@
 {
-  "name": "no-build-starter",
+  "name": "build-free-boilerplate",
   "version": "0.0.1",
   "description": "Simple boilerplate, without any build pipeline, for practice and teaching purpose.",
   "main": "index.js",
@@ -9,12 +9,21 @@
     "build": "npm run make-index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/topheman/build-free-boilerplate.git"
+  },
   "keywords": [
     "umd"
   ],
-  "author": "",
+  "author": "Christophe Rosset",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/topheman/build-free-boilerplate/issues"
+  },
+  "homepage": "https://topheman.github.io/build-free-boilerplate",
   "dependencies": {
     "serve": "^6.4.3"
-  }
+  },
+  "private": true
 }
