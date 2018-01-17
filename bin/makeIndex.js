@@ -3,6 +3,11 @@
 const TARGET_FOLDER = 'src';
 const EXCLUDE_FILES = ['index.html'];
 const LOW_PRIORITY_FOLDERS = ['assets', 'style'];
+const DESCRIPTION_CONFIG = {
+  "./src/react-basic.html": "Simple React example using <code>React.createElement</code> (no JSX).",
+  "./src/react-jsx.html": `Simple React example with JSX (using <a href="https://unpkg.com/babel-standalone" target="_blank">babel-standalone</a>).`,
+  "./src/reasonml.html": `Simple ReasonML example (using <a href="https://unpkg.com/reasonml-in-browser" target="_blank">reasonml-in-browser</a>).`
+};
 
 const path = require('path');
 const fs = require('fs');
@@ -31,16 +36,29 @@ function makeIndex(fromFolder) {
     const stat = fs.statSync(filePath);
     if (stat.isDirectory()) {
       const innerString = makeIndex(filePath);
-      string += `<li class="folder${LOW_PRIORITY_FOLDERS.includes(file) ? ' exclude' : ''}"><a href="${urlFromPath(filePath)}">${file}</a><ul>${innerString}</ul></li>`;
+      string += `
+        <li class="folder${LOW_PRIORITY_FOLDERS.includes(file) ? ' exclude' : ''}">
+          <a href="${urlFromPath(filePath)}">${file}</a>
+          ${DESCRIPTION_CONFIG[urlFromPath(filePath)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(filePath)]}</span>` : ''}
+          <ul>
+            ${innerString}
+          </ul>
+        </li>`;
     }
     else if (!EXCLUDE_FILES.includes(file)) {
-      string += `<li class="file"><a href="${urlFromPath(filePath)}">${file}</a></li>`;
+      string += `
+        <li class="file">
+          <a href="${urlFromPath(filePath)}">${file}</a>
+          ${DESCRIPTION_CONFIG[urlFromPath(filePath)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(filePath)]}</span>` : ''}
+        </li>`;
     }
   });
   return string;
 }
 
-const body = `<ul>${makeIndex(baseFolder)}</ul>`;
+const body = `<ul>
+  ${makeIndex(baseFolder)}
+</ul>`;
 
 const template = `<!DOCTYPE html>
 <html>
@@ -56,6 +74,9 @@ const template = `<!DOCTYPE html>
   <style>
     .folder.exclude a {
       color: #deb3b3;
+    }
+    .description {
+      font-style: italic;
     }
   </style>
 </head>
