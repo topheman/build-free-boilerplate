@@ -37,63 +37,57 @@
   <p>You can directly access the following examples online:</p>
   <ul>
   
-        <li class="folder exclude">
-          <a href="./src/assets">assets</a>
-          
-          <ul>
-            
-        <li class="folder">
-          <a href="./src/assets/images">images</a>
-          
-          <ul>
-            
-        <li class="file">
-          <a href="./src/assets/images/github-retina.png">github-retina.png</a>
-          
-        </li>
-        <li class="file">
-          <a href="./src/assets/images/twitter-retina.png">twitter-retina.png</a>
-          
-        </li>
-          </ul>
-        </li>
-          </ul>
-        </li>
-        <li class="folder exclude">
-          <a href="./src/style">style</a>
-          
-          <ul>
-            
-        <li class="file">
-          <a href="./src/style/footer.css">footer.css</a>
-          
-        </li>
-        <li class="file">
-          <a href="./src/style/header.css">header.css</a>
-          
-        </li>
-        <li class="file">
-          <a href="./src/style/main.css">main.css</a>
-          
-        </li>
-          </ul>
-        </li>
-        <li class="file">
-          <a href="./src/react-basic.html">react-basic.html</a>
-           - <span class="description">Simple React example using <code>React.createElement</code> (no JSX).</span>
-        </li>
-        <li class="file">
-          <a href="./src/react-jsx.html">react-jsx.html</a>
-           - <span class="description">Simple React example with JSX (using <a href="https://unpkg.com/babel-standalone" target="_blank">babel-standalone</a>).</span>
-        </li>
-        <li class="file">
-          <a href="./src/reasonml.html">reasonml.html</a>
-           - <span class="description">Simple ReasonML example (using <a href="https://unpkg.com/reasonml-in-browser" target="_blank">reasonml-in-browser</a>).</span>
-        </li>
-        <li class="file">
-          <a href="./src/test.html">test.html</a>
-          
-        </li>
+<li class="folder exclude">
+  assets
+  
+  <ul>
+<li class="folder">
+  images
+  
+  <ul>
+<li class="file">
+  <a href="./src/assets/images/github-retina.png">github-retina.png</a>
+  
+</li>
+<li class="file">
+  <a href="./src/assets/images/twitter-retina.png">twitter-retina.png</a>
+  
+</li></ul>
+</li></ul>
+</li>
+<li class="folder exclude">
+  style
+  
+  <ul>
+<li class="file">
+  <a href="./src/style/footer.css">footer.css</a>
+  
+</li>
+<li class="file">
+  <a href="./src/style/header.css">header.css</a>
+  
+</li>
+<li class="file">
+  <a href="./src/style/main.css">main.css</a>
+  
+</li></ul>
+</li>
+<li class="file">
+  <a href="./src/react-basic.html">react-basic.html</a>
+   - <span class="description">Simple React example using <code>React.createElement</code> (no JSX).</span>
+</li>
+<li class="file">
+  <a href="./src/react-jsx.html">react-jsx.html</a>
+   - <span class="description">Simple React example with JSX (using <a href="https://unpkg.com/babel-standalone" target="_blank">babel-standalone</a>).</span>
+</li>
+<li class="file">
+  <a href="./src/reasonml.html">reasonml.html</a>
+   - <span class="description">Simple ReasonML example (using <a href="https://unpkg.com/reasonml-in-browser" target="_blank">reasonml-in-browser</a>).</span>
+</li>
+<li class="file">
+  <a href="./src/test.html">test.html</a>
+  
+</li>
 </ul>
   <footer class="footer">
     <p>
@@ -108,23 +102,5 @@
       </iframe>
     </p>
   </footer>
-<script type="text/javascript">
-  // github pages return 404 for folders - remove link to folders
-  if (window.location.hostname === 'topheman.github.io') {
-    // Loaded ready states
-    function done() {
-      document.querySelectorAll('li.folder > a').forEach(el => {
-        el.style.pointerEvents = 'none';
-        el.style.textDecoration = 'none';
-      })
-    };
-    const loadedStates = ['interactive', 'complete'];
-    if (loadedStates.includes(document.readyState)) {
-      done();
-    } else {
-      document.addEventListener('DOMContentLoaded', done);
-    }
-  }
-</script>
 </body>
 </html>

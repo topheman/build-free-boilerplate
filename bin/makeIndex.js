@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const TARGET_FOLDER = 'src';
-const EXCLUDE_FILES = ['index.html'];
+const EXCLUDE_FILES = []; // you might want to exclude some files based on name (like 'index.html' or 'index.htm' for ex)
 // relative to project root
 const LOW_PRIORITY_FILES_AND_FOLDERS = [
   './src/assets',
@@ -15,53 +15,77 @@ const DESCRIPTION_CONFIG = {
 
 const path = require('path');
 const fs = require('fs');
+const dirTree = require('directory-tree');
+
 const baseFolder = path.join(__dirname, '..', TARGET_FOLDER);
+const tree = dirTree(baseFolder);
 
-function urlFromPath(filepath) {
-  return filepath.replace(baseFolder, '').replace(/^\//, `./${TARGET_FOLDER}/`);
-}
+/**
+ * Returns a url relative to the root of the project.
+ * @param filepath
+ * @returns {string}
+ */
+const urlFromPath = filepath => filepath.replace(baseFolder, '').replace(/^\//, `./${TARGET_FOLDER}/`);
 
-function makeIndex(fromFolder) {
-  let string = '';
-  fs.readdirSync(fromFolder)
-  .sort((current, next) => {
-    const currentStat = fs.statSync(path.join(fromFolder, current));
-    const nextStat = fs.statSync(path.join(fromFolder, next));
-    if (currentStat.isDirectory() && !nextStat.isDirectory()) {
-      return -1
-    }
-    if (nextStat.isDirectory() && !currentStat.isDirectory()) {
-      return 1
-    }
-    return current - next;
-  })
-  .forEach(file => {
-    const filePath = path.join(fromFolder, file);
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      const innerString = makeIndex(filePath);
-      string += `
-        <li class="folder${LOW_PRIORITY_FILES_AND_FOLDERS.includes(urlFromPath(filePath)) ? ' exclude' : ''}">
-          <a href="${urlFromPath(filePath)}">${file}</a>
-          ${DESCRIPTION_CONFIG[urlFromPath(filePath)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(filePath)]}</span>` : ''}
-          <ul>
-            ${innerString}
-          </ul>
-        </li>`;
-    }
-    else if (!EXCLUDE_FILES.includes(file)) {
-      string += `
-        <li class="file${LOW_PRIORITY_FILES_AND_FOLDERS.includes(urlFromPath(filePath)) ? ' exclude' : ''}">
-          <a href="${urlFromPath(filePath)}">${file}</a>
-          ${DESCRIPTION_CONFIG[urlFromPath(filePath)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(filePath)]}</span>` : ''}
-        </li>`;
-    }
-  });
-  return string;
-}
+/**
+ * Since github pages doesn't serve a page listing directories, we check if a folder contains an index file,
+ * in order to know if it's safe to add a link (to avoid a 404)
+ * @param directory
+ * @returns Boolean
+ */
+const directoryContainsIndexFile = directory => {
+  return directory
+    && directory.type === 'directory'
+    && directory.children
+    && Array.isArray(directory.children)
+    && directory.children.filter(file => ['index.html', 'index.htm'].includes(file.name)).length > 0;
+};
+
+/**
+ * Recursive function trasversing directory tree mapping to ul/li
+ * @param children
+ * @returns String
+ */
+const createLi = children => {
+  return [...children]
+    // group folders first (like in a file explorer)
+    .sort((current, next) => {
+      if (current.type === 'directory') {
+        if (next.type !== 'directory') {
+          return -1;
+        }
+        return current.name > next.name ? 1 : -1;
+      }
+      if (next.type === 'directory') {
+        if (current.type !== 'directory') {
+          return 1;
+        }
+        return current.name > next.name ? 1 : -1;
+      }
+      return current.name > next.name ? 1 : -1;
+    })
+    .map(child => {
+      if (!EXCLUDE_FILES.includes(child.name) && child.type === 'directory') {
+        const containsIndexFile = directoryContainsIndexFile(child);
+        return `
+<li class="folder${LOW_PRIORITY_FILES_AND_FOLDERS.includes(urlFromPath(child.path)) ? ' exclude' : ''}">
+  ${containsIndexFile ? `<a href="${urlFromPath(child.path)}">` : ''}${child.name}${containsIndexFile ? '</a>' : ''}
+  ${DESCRIPTION_CONFIG[urlFromPath(child.path)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(child.path)]}</span>` : ''}
+  <ul>${createLi(child.children).join('')}</ul>
+</li>`;
+      }
+      if (!EXCLUDE_FILES.includes(child.name)) {
+        return `
+<li class="file${LOW_PRIORITY_FILES_AND_FOLDERS.includes(urlFromPath(child.path)) ? ' exclude' : ''}">
+  <a href="${urlFromPath(child.path)}">${child.name}</a>
+  ${DESCRIPTION_CONFIG[urlFromPath(child.path)] ? ` - <span class="description">${DESCRIPTION_CONFIG[urlFromPath(child.path)]}</span>` : ''}
+</li>`;
+      }
+    });
+};
 
 const body = `<ul>
-  ${makeIndex(baseFolder)}
+  ${createLi(tree.children).join('')}
 </ul>`;
 
 const template = `<!DOCTYPE html>
@@ -115,29 +139,11 @@ const template = `<!DOCTYPE html>
       </iframe>
     </p>
   </footer>
-<script type="text/javascript">
-  // github pages return 404 for folders - remove link to folders
-  if (window.location.hostname === 'topheman.github.io') {
-    // Loaded ready states
-    function done() {
-      document.querySelectorAll('li.folder > a').forEach(el => {
-        el.style.pointerEvents = 'none';
-        el.style.textDecoration = 'none';
-      })
-    };
-    const loadedStates = ['interactive', 'complete'];
-    if (loadedStates.includes(document.readyState)) {
-      done();
-    } else {
-      document.addEventListener('DOMContentLoaded', done);
-    }
-  }
-</script>
 </body>
 </html>
 `;
 
 fs.writeFileSync(path.join(__dirname, '..', 'index.html'), template, 'utf8');
 
-console.log('index.html file created');
+console.log('📄  index.html file created');
 console.log('');
