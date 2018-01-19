@@ -4,8 +4,10 @@
   "description": "Simple boilerplate, without any build pipeline, for practice and teaching purpose.",
   "main": "index.js",
   "scripts": {
-    "start": "npx browser-sync start --server . --files 'src' --no-notify",
+    "start": "npm run browsersync",
     "make-index": "node ./bin/makeIndex.js",
+    "serve": "npx serve .",
+    "browsersync": "npx browser-sync start --server . --files 'src' --no-notify --port 5000",
     "build": "npm run make-index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,7 +26,8 @@
   "homepage": "https://topheman.github.io/build-free-boilerplate",
   "dependencies": {
     "browser-sync": "^2.23.5",
-    "directory-tree": "^2.0.0"
+    "directory-tree": "^2.0.0",
+    "serve": "^6.4.8"
   },
   "engines": {
     "npm": "^5.2.0"

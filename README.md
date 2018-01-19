@@ -24,11 +24,17 @@ npm install
 npm start
 ```
 
-Goto [http://localhost:3001](http://localhost:3001)
+Goto [http://localhost:5000](http://localhost:5000)
 
 It will livereload pages and resources (based on [browsersync](https://browsersync.io/)).
 
 **Note:** Your html pages will need to have at least a `<body>` tag (so that browsersync can inject some script).
+
+**If you don't want** the *live-reload* / *cross-device sync* features from browsersync, instead of the previous command, use the following:
+
+```shell
+npm run serve
+```
 
 ## Build
 
